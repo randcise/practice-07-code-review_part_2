@@ -21,34 +21,22 @@ def calculate_total(self, user_type):
         "vip": 0.25
     }
 
-    total = 0
+    discount = DISCOUNTS.get(user_type, 0)
 
-    for item in self.items:
-        subtotal = item["price"] * item["quantity"]
+    return sum(
+        (item["price"] * item["quantity"]) * (1 - discount)
+        for item in self.items
+    )
+def calculate_shipping(self):
+    total_quantity = sum(item["quantity"] for item in self.items)
 
-        discount = DISCOUNTS.get(user_type, 0)
-        subtotal = subtotal - (subtotal * discount)
-
-        total += subtotal
-
-    return total
-    def calculate_shipping(self):
-        total_quantity = 0
-
-        for item in self.items:
-            total_quantity += item["quantity"]
-
-        if total_quantity == 0:
-            return 0
-
-        if total_quantity < 5:
-            return 10
-
-        if total_quantity < 10:
-            return 5
-
+    if total_quantity == 0:
         return 0
-
+    if total_quantity < 5:
+        return 10
+    if total_quantity < 10:
+        return 5
+    return 0
 def save_cart(self):
     try:
         data = json.dumps(self.items)
