@@ -5,13 +5,15 @@ class CartService:
     def __init__(self):
         self.items = []
 
-    def add_item(self, name, price, quantity):
-        self.items.append({
-            "name": name,
-            "price": price,
-            "quantity": quantity
-        })
+def add_item(self, name, price, quantity):
+    if price < 0 or quantity <= 0:
+        return
 
+    self.items.append({
+        "name": name,
+        "price": price,
+        "quantity": quantity
+    })
     def calculate_total(self, user_type):
         total = 0
 

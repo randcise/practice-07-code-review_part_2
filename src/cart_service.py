@@ -1,12 +1,14 @@
 import json
 
 from src.discount_calculator import DiscountCalculator
+from src.shipping_calculator import ShippingCalculator
 
 
 class CartService:
     def __init__(self):
         self.items = []
         self.discount_calculator = DiscountCalculator()
+        self.shipping_calculator = ShippingCalculator()
 
     def add_item(self, name, price, quantity):
         self.items.append({
@@ -36,16 +38,9 @@ class CartService:
         for item in self.items:
             total_quantity += item["quantity"]
 
-        if total_quantity == 0:
-            return 0
-
-        if total_quantity < 5:
-            return 10
-
-        if total_quantity < 10:
-            return 5
-
-        return 0
+        return self.shipping_calculator.calculate(
+            total_quantity
+        )
 
     def save_cart(self):
         data = json.dumps(self.items)
