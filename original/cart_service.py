@@ -50,17 +50,21 @@ def add_item(self, name, price, quantity):
 
         return 0
 
-    def save_cart(self):
+def save_cart(self):
+    try:
         data = json.dumps(self.items)
 
         with open("cart.json", "w") as file:
             file.write(data)
-
-    def load_cart(self):
+    except Exception:
+        pass
+def load_cart(self):
+    try:
         with open("cart.json", "r") as file:
             data = file.read()
 
         self.items = json.loads(data)
-
+    except Exception:
+        self.items = []
     def clear_cart(self):
         self.items = []
