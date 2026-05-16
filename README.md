@@ -1,4 +1,3 @@
----```md id="readme_final"
 # 🛒 CartService Refactoring Project
 
 ## 📌 Project Overview
