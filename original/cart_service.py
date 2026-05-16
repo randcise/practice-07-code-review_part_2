@@ -14,25 +14,24 @@ def add_item(self, name, price, quantity):
         "price": price,
         "quantity": quantity
     })
-    def calculate_total(self, user_type):
-        total = 0
+def calculate_total(self, user_type):
+    DISCOUNTS = {
+        "regular": 0.1,
+        "premium": 0.15,
+        "vip": 0.25
+    }
 
-        for item in self.items:
-            subtotal = item["price"] * item["quantity"]
+    total = 0
 
-            if user_type == "regular":
-                subtotal = subtotal - (subtotal * 0.1)
+    for item in self.items:
+        subtotal = item["price"] * item["quantity"]
 
-            elif user_type == "premium":
-                subtotal = subtotal - (subtotal * 0.15)
+        discount = DISCOUNTS.get(user_type, 0)
+        subtotal = subtotal - (subtotal * discount)
 
-            elif user_type == "vip":
-                subtotal = subtotal - (subtotal * 0.25)
+        total += subtotal
 
-            total += subtotal
-
-        return total
-
+    return total
     def calculate_shipping(self):
         total_quantity = 0
 
